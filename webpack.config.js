@@ -1,4 +1,15 @@
 const { readFileSync } = require('fs');
+const webpack = require('webpack');
+
+const treeShakenMinifyer = new webpack.LoaderOptionsPlugin({
+  minimize: true,
+  debug: false
+});
+
+const extractSharedLibraries = new webpack.optimize.CommonsChunkPlugin({
+  name: 'vendorLibraries',
+  filename: 'vendorLibraries.js'
+});
 
 const babelSettings = JSON.parse(readFileSync('.babelrc'));
 
@@ -6,6 +17,11 @@ module.exports = {
   entry: {
     'index': [ './src/index.js' ]
   },
+  plugins: [
+    extractSharedLibraries,
+    treeShakenMinifyer,
+    new webpack.NamedModulesPlugin()
+  ],
   resolve: {
     extensions: [ '.js', '.html' ]
   },

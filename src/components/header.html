@@ -1,0 +1,19 @@
+<h1>{{ salutation }}, counted to {{ count }} so far.</h1>
+
+<script>
+    import { helloWorld } from '../helpers/helloWorld';
+
+    export default {
+      data() {
+        return {
+          person: 'Mysterious Stranger',
+          count: 0
+        }
+      },
+      computed: {
+        salutation(person) {
+          return helloWorld(person);
+        }
+      }
+    };
+</script>
